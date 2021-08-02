@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RegisterBusinessTest {
+class RegisterBusinessFailureTest {
 
     @Test
     @DisplayName("Firstname ของ speaker เป็น null")
@@ -77,54 +77,5 @@ class RegisterBusinessTest {
         Exception exception = assertThrows(SpeakerDoesntMeetRequirementsException.class, () ->
                 registerBusiness.register(null, speaker));
         assertEquals("Speaker doesn't meet our standard rules.", exception.getMessage());
-    }
-
-    @Test
-    @DisplayName("Save speaker with return 1")
-    public void case07() {
-        RegisterBusiness registerBusiness = new RegisterBusiness();
-        Speaker speaker = new Speaker();
-        speaker.setFirstName("Supoj");
-        speaker.setLastName("Ploy");
-        speaker.setEmail("supoj.pl@gmail.com");
-
-        SpeakerRepository speakerRepository = new SpeakerRepository() {
-            @Override
-            public Integer saveSpeaker(Speaker speaker) {
-                return 1;
-            }
-        };
-
-        assertEquals(1, registerBusiness.register(speakerRepository, speaker));
-    }
-
-    @Test
-    @DisplayName("Set experience year <= 1, return fee 500")
-    public void case08() {
-        RegisterBusiness registerBusiness = new RegisterBusiness();
-        Speaker speaker = new Speaker();
-        speaker.setExp(1);
-        assertEquals(500, registerBusiness.getFee(1));
-    }
-
-    @Test
-    @DisplayName("Set experience year > 1 && <= 3, return fee 250")
-    public void case09() {
-        RegisterBusiness registerBusiness = new RegisterBusiness();
-        assertEquals(250, registerBusiness.getFee(3));
-    }
-
-    @Test
-    @DisplayName("Set experience year > 3 && <= 5, return fee 100")
-    public void case10() {
-        RegisterBusiness registerBusiness = new RegisterBusiness();
-        assertEquals(100, registerBusiness.getFee(5));
-    }
-
-    @Test
-    @DisplayName("Set experience year > 5 && <= 9, return fee 50")
-    public void case11() {
-        RegisterBusiness registerBusiness = new RegisterBusiness();
-        assertEquals(50, registerBusiness.getFee(9));
     }
 }
